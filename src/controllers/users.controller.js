@@ -28,10 +28,9 @@ class UserController {
 
     async getUser(req, res) {
         try {
-            res.json("it's work")
+            res.status(200).send(await userServices.getUsers())
         } catch (error) {
-            console.log(error);
-            res.status(400).json({ message: "get users error" })
+            res.status(400).send(error.message)
         }
     }
 }

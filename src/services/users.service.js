@@ -38,6 +38,10 @@ class UserServices {
         })
     }
 
+    async getUsers(){
+        return User.find()
+    }
+
 }
 
 module.exports = new UserServices
