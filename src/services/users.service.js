@@ -38,8 +38,11 @@ class UserServices {
         })
     }
 
-    async getUsers(){
-        return User.find()
+    async getUsers() {
+        const users = await User.find()
+        const result = []
+        users.forEach(users=>result.push(users.username))
+        return result
     }
 
 }
