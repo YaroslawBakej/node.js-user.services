@@ -15,8 +15,7 @@ class ChatController {
     async deleteChat(req, res) {
         try {
             const { name } = req.params;
-            console.log(name)
-            await Chat.findByNameAndDelete(name);
+            await Chat.findOneAndDelete(name);
             res.status(200).json({ message: `Чат ${name} успешно удален` });
         } catch (error) {
             res.status(500).json({ error: 'Не получилось удалить чат' });
@@ -25,22 +24,21 @@ class ChatController {
 
     async updateChat(req, res) {
         try {
-            const { id } = req.params;
-            const { name } = req.body;
-            const updatedChat = await Chat.findByIdAndUpdate(id, { name }, { new: true });
-            res.status(200).json(updatedChat);
+            const { name } = req.params;
+            const { setname } = req.body
+            await Chat.findOneAndUpdate({ name }, { name: setname });
+            res.status(200).json(`Чат ${name} сменил название на ${setname}`);
         } catch (error) {
-            res.status(500).json({ error: 'Failed to update chat' });
+            res.status(500).json({ error: "Не удалось изменить имя чата" });
         }
     };
 
     async getAllChats(req, res) {
         try {
-            console.log("+")
             const chats = await Chat.find();
             res.status(200).json(chats);
         } catch (error) {
-            res.status(500).json({ error: 'Failed to get chats' });
+            res.status(500).json({ error: 'Не удалось получить список чатов' });
         }
     };
 
